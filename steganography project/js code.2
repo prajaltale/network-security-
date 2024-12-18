@@ -1,0 +1,32 @@
+// Function to hide a message in a dummy packet
+function hideMessage() {
+    const message = document.getElementById('message').value;
+
+    if (!message) {
+        document.getElementById('output').textContent = "Please enter a message to hide.";
+        return;
+    }
+
+    const dummyPacket = "HEADER:12345:PAYLOAD:"; // Simulated packet structure
+    const hiddenPacket = dummyPacket + btoa(message); // Encode the message in Base64
+    document.getElementById('output').textContent = `Hidden Packet: ${hiddenPacket}`;
+}
+
+// Function to extract the hidden message from a provided packet
+function extractHiddenPacket() {
+    const hiddenPacket = document.getElementById('hiddenPacket').value;
+
+    if (!hiddenPacket) {
+        document.getElementById('output').textContent = "Please enter a hidden packet to extract.";
+        return;
+    }
+
+    try {
+        const encodedMessage = hiddenPacket.split("PAYLOAD:")[1]; // Extract the part after "PAYLOAD:"
+        const message = atob(encodedMessage); // Decode Base64 to reveal the hidden message
+        document.getElementById('output').textContent = `Extracted Message: ${message}`;
+    } catch (error) {
+        document.getElementById('output').textContent = "Error: Invalid hidden packet format.";
+    }
+}
+
